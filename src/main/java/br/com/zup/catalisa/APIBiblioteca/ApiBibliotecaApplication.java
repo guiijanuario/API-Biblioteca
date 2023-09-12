@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Biblioteca API", version = "1", description = "API desenvolvida para gerenciar os livros de uma biblioteca"))
@@ -11,6 +12,6 @@ public class ApiBibliotecaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiBibliotecaApplication.class, args);
+		System.out.println(new BCryptPasswordEncoder().encode("1234"));
 	}
-
 }

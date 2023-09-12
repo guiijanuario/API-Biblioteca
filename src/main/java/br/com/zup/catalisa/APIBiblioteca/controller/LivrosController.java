@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class LivrosController {
     LivrosService livrosService;
 
     //busca todos os livros
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(path = "/livros")
     @Operation(summary = " : Pega todos os livros do banco", method = "GET")
     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso")
@@ -29,6 +31,7 @@ public class LivrosController {
     }
 
     //busca livro pelo ID
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(path = "/livros/{id}")
     @Operation(summary = " : Busca um ID especifico dentro do banco de dados", method = "GET")
     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso")
@@ -36,6 +39,7 @@ public class LivrosController {
         return livrosService.findById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(path = "/livros")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = " : Cria um novo livro", method = "POST")
@@ -44,6 +48,7 @@ public class LivrosController {
         return livrosService.register(livrosModel);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(path = "/livros/{id}")
     @Operation(summary = " : Altera um livro pelo ID", method = "PUT")
     @ApiResponse(responseCode = "200", description = "Livro alterado com sucesso")
@@ -51,6 +56,7 @@ public class LivrosController {
         return livrosService.change(id, livrosModel);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(path = "/livros/{id}")
     @Operation(summary = " : Deleta um livro pelo ID", method = "PUT")
     @ApiResponse(responseCode = "200", description = "Livro deletado com sucesso")
